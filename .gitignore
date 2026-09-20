@@ -1,0 +1,13 @@
+# No subir archivos compilados
+target/
+*.class
+*.war
+
+# Archivo privado de configuración
+config.properties
+src/main/resources/config.properties
+
+# Archivos de sistema
+*.iml
+.idea/
+nbproject/private/
