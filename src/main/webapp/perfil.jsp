@@ -17,14 +17,16 @@
     int idUsuario = usuario.getIdUsuario();
     boolean esAdmin = (usuario.getIdRol() == 1);
     
+    // ✅ ABRIMOS UNA SOLA CONEXIÓN PARA TODA LA PÁGINA
+    Connection conn = DatabaseConnection.getConnection();
+
     // Obtener datos del perfil
     String carrera = "";
     int anioEgreso = 0;
     String linkedin = "";
     String biografia = "";
     
-    try (Connection conn = DatabaseConnection.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(
+    try (PreparedStatement pstmt = conn.prepareStatement(
             "SELECT carrera, anio_egreso, linkedin, biografia FROM perfil_egresado WHERE id_usuario = ?")) {
         pstmt.setInt(1, idUsuario);
         ResultSet rs = pstmt.executeQuery();
@@ -87,8 +89,7 @@
         <div class="card">
             <h2>📜 Información Académica</h2>
             <%
-                try (Connection conn = DatabaseConnection.getConnection();
-                     PreparedStatement pstmt = conn.prepareStatement(
+                try (PreparedStatement pstmt = conn.prepareStatement(
                         "SELECT grado_obtenido, anio_graduacion, institucion FROM informacion_academica WHERE id_usuario = ? ORDER BY anio_graduacion DESC")) {
                     pstmt.setInt(1, idUsuario);
                     ResultSet rs = pstmt.executeQuery();
@@ -117,8 +118,7 @@
         <div class="card">
             <h2>💼 Experiencia Laboral</h2>
             <%
-                try (Connection conn = DatabaseConnection.getConnection();
-                     PreparedStatement pstmt = conn.prepareStatement(
+                try (PreparedStatement pstmt = conn.prepareStatement(
                         "SELECT empresa, cargo, fecha_inicio, fecha_fin, es_actual, sector FROM experiencia_laboral WHERE id_usuario = ? ORDER BY fecha_inicio DESC")) {
                     pstmt.setInt(1, idUsuario);
                     ResultSet rs = pstmt.executeQuery();
@@ -151,8 +151,7 @@
         <div class="card">
             <h2>⚡ Habilidades</h2>
             <%
-                try (Connection conn = DatabaseConnection.getConnection();
-                     PreparedStatement pstmt = conn.prepareStatement(
+                try (PreparedStatement pstmt = conn.prepareStatement(
                         "SELECT ch.nombre_habilidad, ch.tipo, he.nivel_dominio " +
                         "FROM habilidad_egresado he JOIN catalogo_habilidad ch ON he.id_habilidad = ch.id_habilidad " +
                         "WHERE he.id_usuario = ?")) {
@@ -179,3 +178,14 @@
     </div>
 </body>
 </html>
+
+<%
+    // ✅ CERRAMOS la conexión AL FINAL de la página (una sola vez)
+    if (conn != null) {
+        try { 
+            conn.close(); 
+        } catch (Exception e) {
+            // Ignorar o manejar error de cierre
+        }
+    }
+%>
