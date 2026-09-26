@@ -10,7 +10,7 @@ import java.sql.Connection;
 public class ProbarConexion {
     public static void main(String[] args) {
         try (Connection conn = DatabaseConnection.getConnection()) {
-            System.out.println("✅ ¡CONEXIÓN EXITOSA! 🎉");
+            System.out.println("¡CONEXION EXITOSA!");
             System.out.println("Conectado a: " + Config.DB_NAME);
             System.out.println("Host: " + Config.DB_HOST);
         } catch (Exception e) {
