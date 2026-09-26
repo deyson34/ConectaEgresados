@@ -32,57 +32,30 @@
         .badge.admin { background: #9f7aea; }
     </style>
 </head>
-<body>
-    <div class="sidebar">
-        <h2 style="color:white; margin-bottom:20px;">🎓 ConectaEgresados</h2>
-        <p style="color:#a0aec0; font-size:12px; margin-bottom:20px;">
-            <%= usuario.getNombres() %> <%= usuario.getApellidos() %><br>
-            <span class="badge <%= esAdmin ? "admin" : "" %>"><%= usuario.getNombreRol() %></span>
-        </p>
-        
-        <a href="dashboard.jsp">🏠 Inicio</a>
-        <a href="perfil.jsp">👤 Mi Perfil</a>
-        <a href="cursos.jsp">📚 Cursos</a>
-        <a href="mis_cursos.jsp">📝 Mis Cursos</a>
-        <a href="ofertas.jsp">💼 Ofertas Laborales</a>
-        <a href="eventos.jsp">📅 Eventos</a>
-        <a href="foro.jsp">💬 Foro</a>
-        
-        <% if (esAdmin) { %>
-            <hr style="border-color:#4a5568; margin:15px 0;">
-            <p style="color:#a0aec0; font-size:11px; margin-bottom:10px;">⚙️ ADMINISTRACIÓN</p>
-            <a href="admin_usuarios.jsp" class="admin-only">👥 Gestionar Usuarios</a>
-            <a href="admin_cursos.jsp" class="admin-only">📚 Gestionar Cursos</a>
-            <a href="admin_ofertas.jsp" class="admin-only">💼 Gestionar Ofertas</a>
-            <a href="admin_eventos.jsp" class="admin-only">📅 Gestionar Eventos</a>
-            <a href="admin_reportes.jsp" class="admin-only">📊 Reportes y Estadísticas</a>
-        <% } %>
-        
-        <hr style="border-color:#4a5568; margin:15px 0;">
-        <a href="logout" style="color:#fc8181;">🚪 Cerrar Sesión</a>
-    </div>
-    
+<body style="background:#f7fafc;">
+    <jsp:include page="sidebar.jsp" />
     <div class="content">
+        <!-- Aquí va TODO el contenido del dashboard (lo que tenías antes) -->
         <div class="header">
             <h1>¡Bienvenido, <%= usuario.getNombres() %>! 👋</h1>
             <p>Has iniciado sesión como <strong><%= usuario.getNombreRol() %></strong></p>
         </div>
-        
+
         <div class="card">
             <h3>📋 Resumen</h3>
             <p>Correo: <%= usuario.getCorreo() %></p>
-            <p>DNI: <%= usuario.getDniCe() %></p>
+            <p>DNI: <%= usuario.getDniCe() != null ? usuario.getDniCe() : "No especificado" %></p>
         </div>
-        
+
         <% if (esAdmin) { %>
             <div class="card" style="border-left: 4px solid #9f7aea;">
                 <h3>🔧 Panel de Administrador</h3>
-                <p>Tienes acceso a todas las opciones de gestión del sistema.</p>
+                <p>Tienes acceso a todas las opciones de gestión en el menú lateral izquierdo.</p>
             </div>
         <% } else { %>
             <div class="card" style="border-left: 4px solid #667eea;">
                 <h3>📚 Panel de Egresado</h3>
-                <p>Explora cursos, ofertas laborales y eventos disponibles para ti.</p>
+                <p>Explora cursos, ofertas laborales, eventos y conecta con otros egresados en el directorio.</p>
             </div>
         <% } %>
     </div>
