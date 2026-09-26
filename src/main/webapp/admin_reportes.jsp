@@ -94,7 +94,7 @@
 </head>
 <body style="background:#f7fafc;">
     <div class="menu">
-        <a href="admin_dashboard.jsp">⚙️ Panel Admin</a>
+        <a href="dashboard.jsp">🏠 Inicio</a>
         <a href="admin_usuarios.jsp">👥 Usuarios</a>
         <a href="admin_cursos.jsp">📚 Cursos</a>
         <a href="admin_ofertas.jsp">💼 Ofertas</a>
@@ -104,7 +104,7 @@
     </div>
     
     <div class="container">
-        <a href="admin_dashboard.jsp" class="btn-volver">← Volver al Panel</a>
+        <a href="dashboard.jsp" class="btn-volver">← Volver al Inicio</a>
         <h1 style="color:#2d3748; margin-bottom:25px;">📊 Reportes y Estadísticas del Sistema</h1>
         
         <!-- Tarjetas de estadísticas generales -->
