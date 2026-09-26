@@ -61,13 +61,7 @@
     </style>
 </head>
 <body style="background:#f7fafc;">
-    <div class="menu">
-        <a href="dashboard.jsp">🏠 Inicio</a>
-        <a href="perfil.jsp">👤 Mi Perfil</a>
-        <a href="cursos.jsp">📚 Cursos</a>
-        <a href="ofertas.jsp">💼 Ofertas</a>
-        <a href="logout" style="float:right; color:#fc8181;">🚪 Cerrar Sesión</a>
-    </div>
+    <jsp:include page="sidebar.jsp" />
     
     <div class="container">
         <div class="card">

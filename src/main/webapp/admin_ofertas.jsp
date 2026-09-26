@@ -43,15 +43,7 @@
     </style>
 </head>
 <body style="background:#f7fafc;">
-    <div class="menu">
-        <a href="dashboard.jsp">🏠 Inicio</a>
-        <a href="admin_usuarios.jsp">👥 Usuarios</a>
-        <a href="admin_cursos.jsp">📚 Cursos</a>
-        <a href="admin_ofertas.jsp">💼 Ofertas</a>
-        <a href="admin_eventos.jsp">📅 Eventos</a>
-        <a href="admin_reportes.jsp">📊 Reportes</a>
-        <a href="logout" style="float:right; color:#fc8181;">🚪 Cerrar Sesión</a>
-    </div>
+    <jsp:include page="sidebar.jsp" />
     
     <div class="container">
         <a href="dashboard.jsp" class="btn-volver">← Volver al Inicio</a>
