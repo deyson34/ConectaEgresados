@@ -1,9 +1,8 @@
 <%-- 
     Document   : cursos
-    Created on : 25 set. 2026, 9:53:27 p. m.
+    Created on : 25 set. 2026, 9:53:27 p. m.
     Author     : Usuario
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.conectaegresados.model.Usuario"%>
 <%@page import="java.sql.*"%>
@@ -22,30 +21,104 @@
     <meta charset="UTF-8">
     <title>Cursos - ConectaEgresados</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Estilos locales SOLO para cursos -->
     <style>
-        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
-        .menu { background: #2d3748; padding: 15px; margin-bottom: 20px; }
-        .menu a { color: white; text-decoration: none; margin-right: 20px; }
-        .menu a:hover { color: #667eea; }
-        .curso-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #667eea; }
-        .curso-card h3 { color: #2d3748; margin-bottom: 8px; }
-        .curso-card p { color: #718096; margin-bottom: 5px; font-size: 14px; }
-        .btn-inscribir { background: #48bb78; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 14px; }
-        .btn-inscribir:hover { background: #38a169; }
-        .btn-detalle { background: #667eea; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 14px; margin-right: 10px; }
-        .btn-detalle:hover { background: #5a67d8; }
-        .badge { background: #edf2f7; padding: 4px 10px; border-radius: 15px; font-size: 12px; margin-right: 5px; }
-        .btn-admin { background: #9f7aea; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-block; margin-bottom: 20px; }
+        .curso-card {
+            border-left: 4px solid #10b981;
+        }
+        .curso-titulo {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .curso-desc {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .curso-badge {
+            background: rgba(16,185,129,0.15);
+            color: #6ee7b7;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            margin-right: 6px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .curso-btn-detalle {
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+            transition: background 0.2s;
+        }
+        .curso-btn-detalle:hover {
+            background: rgba(255,255,255,0.16);
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .curso-btn-inscribir {
+            background: #10b981;
+            color: #052e26;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .curso-btn-inscribir:hover {
+            background: #d1fae5;
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+        .curso-btn-admin {
+            background: rgba(124,58,237,0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(124,58,237,0.4);
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 25px;
+            transition: background 0.2s;
+        }
+        .curso-btn-admin:hover {
+            background: rgba(124,58,237,0.35);
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .curso-vacio {
+            text-align: center;
+            color: #94a3b8;
+            padding: 40px 20px;
+            font-size: 15px;
+        }
     </style>
 </head>
-<body style="background:#f7fafc;">
+<body class="body">
     <jsp:include page="sidebar.jsp" />
     
-    <div class="container">
-        <h1 style="color:#2d3748; margin-bottom:20px;">📚 Cursos de Capacitación Disponibles</h1>
+    <div class="content">
+        <!-- Título estilo welcome -->
+        <div class="dir-greeting">Capacitación</div>
+        <h1 class="dir-titulo">Cursos Disponibles</h1>
+        <p style="color:#cbd5e1; margin-bottom:25px; font-size:15px;">Mejora tus habilidades con nuestros cursos de capacitación continua</p>
         
         <% if (esAdmin) { %>
-            <a href="admin_cursos.jsp" class="btn-admin">⚙️ Gestionar Cursos (Admin)</a>
+            <a href="admin_cursos.jsp" class="curso-btn-admin">⚙️ Gestionar Cursos (Admin)</a>
         <% } %>
         
         <%
@@ -65,28 +138,27 @@
                     String fechaFin = rs.getString("fecha_fin");
                     int cupo = rs.getInt("cupo_maximo");
         %>
-                    <div class="curso-card">
-                        <h3><%= titulo %></h3>
-                        <p><strong>Descripción:</strong> <%= descripcion != null ? descripcion : "Sin descripción" %></p>
-                        <p>
-                            <span class="badge">⏱️ <%= duracion %> horas</span>
-                            <span class="badge">👨‍🏫 <%= instructor != null ? instructor : "Por definir" %></span>
-                            <span class="badge">📅 <%= fechaInicio %> al <%= fechaFin %></span>
-                            <span class="badge">👥 Cupo: <%= cupo %></span>
-                        </p>
-                        <br>
-                        <a href="curso_detalle.jsp?id=<%= idCurso %>" class="btn-detalle">📖 Ver Detalle</a>
+                    <div class="card curso-card">
+                        <div class="curso-titulo"><%= titulo %></div>
+                        <p class="curso-desc"><strong style="color:#6ee7b7;">Descripción:</strong> <%= descripcion != null ? descripcion : "Sin descripción" %></p>
+                        <div style="margin-bottom:15px;">
+                            <span class="curso-badge">⏱️ <%= duracion %> horas</span>
+                            <span class="curso-badge">👨‍🏫 <%= instructor != null ? instructor : "Por definir" %></span>
+                            <span class="curso-badge">📅 <%= fechaInicio %> al <%= fechaFin %></span>
+                            <span class="curso-badge">👥 Cupo: <%= cupo %></span>
+                        </div>
+                        <a href="curso_detalle.jsp?id=<%= idCurso %>" class="curso-btn-detalle">📖 Ver Detalle</a>
                         <% if (!esAdmin) { %>
-                            <a href="inscripcion?id_curso=<%= idCurso %>" class="btn-inscribir">✍️ Inscribirme</a>
+                            <a href="inscripcion?id_curso=<%= idCurso %>" class="curso-btn-inscribir">✍️ Inscribirme</a>
                         <% } %>
                     </div>
         <%
                 }
                 if (!hayCursos) {
-                    out.println("<p style='color:#a0aec0; text-align:center; padding:40px;'>No hay cursos disponibles en este momento.</p>");
+                    out.println("<div class='card curso-vacio'>No hay cursos disponibles en este momento. ¡Vuelve pronto! ✨</div>");
                 }
             } catch (Exception e) {
-                out.println("<p style='color:red;'>Error: " + e.getMessage() + "</p>");
+                out.println("<div class='card curso-vacio' style='color:#fca5a5;'>❌ Error: " + e.getMessage() + "</div>");
             }
         %>
     </div>

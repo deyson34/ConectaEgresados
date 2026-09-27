@@ -1,9 +1,8 @@
 <%-- 
     Document   : foro
-    Created on : 25 set. 2026, 10:41:06 p. m.
+    Created on : 25 set. 2026, 10:41:06 p. m.
     Author     : Usuario
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.conectaegresados.model.Usuario"%>
 <%@page import="java.sql.*"%>
@@ -21,29 +20,80 @@
     <meta charset="UTF-8">
     <title>Foro - ConectaEgresados</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Estilos locales SOLO para lo específico del foro -->
     <style>
-        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
-        .menu { background: #2d3748; padding: 15px; margin-bottom: 20px; }
-        .menu a { color: white; text-decoration: none; margin-right: 20px; }
-        .menu a:hover { color: #667eea; }
-        .publicacion-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #9f7aea; }
-        .publicacion-card h3 { color: #2d3748; margin-bottom: 8px; }
-        .publicacion-card p { color: #718096; margin-bottom: 5px; font-size: 14px; }
-        .btn-nuevo { background: #9f7aea; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-block; margin-bottom: 20px; }
-        .btn-nuevo:hover { background: #805ad5; }
-        .btn-ver { background: #667eea; color: white; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 13px; }
-        .badge { background: #edf2f7; padding: 4px 10px; border-radius: 15px; font-size: 12px; margin-right: 5px; }
-        .meta { font-size: 12px; color: #a0aec0; }
+        .foro-publicacion {
+            border-left: 4px solid #10b981;
+        }
+        .foro-titulo {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .foro-contenido {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .foro-meta {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+        .foro-btn-nuevo {
+            background: #10b981;
+            color: #052e26;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 25px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .foro-btn-nuevo:hover {
+            background: #d1fae5;
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+        .foro-btn-ver {
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .foro-btn-ver:hover {
+            background: rgba(255,255,255,0.16);
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .foro-vacio {
+            text-align: center;
+            color: #94a3b8;
+            padding: 40px 20px;
+            font-size: 15px;
+        }
     </style>
 </head>
-<body style="background:#f7fafc;">
+<body class="body">
     <jsp:include page="sidebar.jsp" />
     
-    <div class="container">
-        <h1 style="color:#2d3748; margin-bottom:10px;">💬 Foro de Experiencias y Casos de Éxito</h1>
-        <p style="color:#718096; margin-bottom:20px;">Comparte tus experiencias, consejos y casos de éxito con otros egresados</p>
+    <div class="content">
+        <!-- Título estilo welcome (usa tus clases globales) -->
+        <div class="dir-greeting">Comunidad</div>
+        <h1 class="dir-titulo">Foro de Experiencias</h1>
+        <p style="color:#cbd5e1; margin-bottom:25px; font-size:15px;">Comparte tus experiencias, consejos y casos de éxito con otros egresados</p>
         
-        <a href="nueva_publicacion.jsp" class="btn-nuevo">✏️ Nueva Publicación</a>
+        <a href="nueva_publicacion.jsp" class="foro-btn-nuevo">✏️ Nueva Publicación</a>
         
         <%
             try (Connection conn = DatabaseConnection.getConnection();
@@ -64,20 +114,19 @@
                     int likes = rs.getInt("me_gusta");
                     String autor = rs.getString("nombres") + " " + rs.getString("apellidos");
         %>
-                    <div class="publicacion-card">
-                        <h3><%= titulo != null ? titulo : "Sin título" %></h3>
-                        <p><%= contenido != null && contenido.length() > 200 ? contenido.substring(0, 200) + "..." : contenido %></p>
-                        <p class="meta">👤 Por: <%= autor %> | 📅 <%= fecha %> | ❤️ <%= likes %> me gusta</p>
-                        <br>
-                        <a href="hilo.jsp?id=<%= idPublicacion %>" class="btn-ver">📖 Ver publicación completa</a>
+                    <div class="card foro-publicacion">
+                        <div class="foro-titulo"><%= titulo != null ? titulo : "Sin título" %></div>
+                        <p class="foro-contenido"><%= contenido != null && contenido.length() > 200 ? contenido.substring(0, 200) + "..." : contenido %></p>
+                        <p class="foro-meta">👤 Por: <%= autor %> &nbsp;|&nbsp; 📅 <%= fecha %> &nbsp;|&nbsp; ❤️ <%= likes %> me gusta</p>
+                        <a href="hilo.jsp?id=<%= idPublicacion %>" class="foro-btn-ver">📖 Ver publicación completa</a>
                     </div>
         <%
                 }
                 if (!hayPublicaciones) {
-                    out.println("<p style='color:#a0aec0; text-align:center; padding:40px;'>Aún no hay publicaciones. ¡Sé el primero en compartir tu experiencia!</p>");
+                    out.println("<div class='card foro-vacio'>Aún no hay publicaciones. ¡Sé el primero en compartir tu experiencia! ✨</div>");
                 }
             } catch (Exception e) {
-                out.println("<p style='color:red;'>Error: " + e.getMessage() + "</p>");
+                out.println("<div class='card foro-vacio' style='color:#fca5a5;'>❌ Error: " + e.getMessage() + "</div>");
             }
         %>
     </div>

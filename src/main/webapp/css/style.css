@@ -65,15 +65,13 @@ html {
 body {
     background-image:
         linear-gradient(rgba(5, 46, 38, 0.55), rgba(15, 23, 42, 0.65)),
-        url('img/bg-dashboard.jpg');
+        url('../img/bg-dashboard.jpg');
     background-size: cover;
     background-position: center top;
-    background-attachment: fixed; /* ← El fondo se queda fijo al scrollear */
+    background-attachment: scroll; /* ← El fondo se queda fijo al scrollear */
     background-repeat: no-repeat;
+    min-height: 100vh;
     
-    color: var(--gris-700);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
 }
  
 a {
@@ -216,27 +214,56 @@ a:hover {
     align-items: center;
     gap: 10px;
 }
+.dir-greeting {
+            color: #34d399;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+.dir-titulo {
+            color: #ffffff !important;
+            border: none !important;
+            font-size: 36px !important;
+            font-weight: 700 !important;
+            line-height: 1.2;
+            margin-bottom: 25px !important;
+            padding-bottom: 0 !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
  
 /* ---------- TARJETAS (cards) ---------- */
+/* Reemplaza tu regla .card por esta */
 .card {
-    background: var(--blanco);
-    padding: 30px;
-    border-radius: var(--radio-base);
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 26px 32px;
     margin-bottom: 24px;
-    box-shadow: var(--sombra-suave);
-    border: 1px solid var(--gris-200);
-    transition: box-shadow var(--transicion), border-color var(--transicion);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: var(--blanco);
+    transition: transform var(--transicion), box-shadow var(--transicion);
 }
- 
+
 .card:hover {
-    box-shadow: var(--sombra-media);
-    border-color: var(--verde-600);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(16, 185, 129, 0.3);
 }
- 
+
+/* Ajustamos títulos y textos dentro de las tarjetas */
 .card h2, .card h3 {
-    color: var(--verde-950);
+    color: var(--verde-400, #34d399);
     margin-bottom: 18px;
     font-weight: 600;
+}
+
+.card p, .card label {
+    color: #cbd5e1;
 }
  
 /* ---------- FORMULARIOS ---------- */
